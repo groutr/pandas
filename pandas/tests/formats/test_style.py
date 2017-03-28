@@ -706,9 +706,10 @@ class TestStyler(TestCase):
 class TestStylerMatplotlibDep(TestCase):
 
     def test_background_gradient(self):
+        from matplotlib import cm
         df = pd.DataFrame([[1, 2], [2, 4]], columns=['A', 'B'])
         for axis in [0, 1, 'index', 'columns']:
-            for cmap in [None, 'YlOrRd']:
+            for cmap in [None, 'YlOrRd', cm.get_cmap('YlOrRd')]:
                 result = df.style.background_gradient(cmap=cmap)._compute().ctx
                 self.assertTrue(all("#" in x[0] for x in result.values()))
                 self.assertEqual(result[(0, 0)], result[(0, 1)])
