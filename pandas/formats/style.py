@@ -824,7 +824,10 @@ class Styler(object):
             # matplotlib modifies inplace?
             # https://github.com/matplotlib/matplotlib/issues/5427
             normed = norm(s.values)
-            c = [colors.rgb2hex(x) for x in plt.cm.get_cmap(cmap)(normed)]
+
+            if is_string_like(cmap):
+                cmap = plt.cm.get_cmap(cmap)
+            c = [colors.rgb2hex(x) for x in cmap(normed)]
             return ['background-color: %s' % color for color in c]
 
     def set_properties(self, subset=None, **kwargs):
